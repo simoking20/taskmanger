@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-0my(3eitn^hev0-wp-v%(8og00r53px$!r6q_yk8x#a_%+47m3'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -152,3 +152,6 @@ TEMPLATES = [
 STATIC_URL='/static/'
 STATICFILES_DIRS=[BASE_DIR/ 'static']
 
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
