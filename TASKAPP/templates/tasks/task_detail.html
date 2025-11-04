@@ -1,0 +1,30 @@
+{% extends "base/base.html" %}
+{% block title %}Task Details{% endblock title %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto bg-white p-6 rounded-xl shadow-md border border-gray-200">
+    <h1 class="text-3xl font-bold text-gray-900 mb-2">{{ task.title }}</h1>
+    <p class="text-gray-600 mb-4">{{ task.description|linebreaks }}</p>
+
+    <ul class="text-gray-700 space-y-1">
+        <li><strong>Assigned To:</strong> {{ task.assigned_to.username }}</li>
+        <li><strong>Due Date:</strong> {{ task.due_date|date:"M d, Y" }}</li>
+        <li>
+            <strong>Status:</strong>
+            {% if task.completed %}
+                <span class="text-green-600 font-semibold">Completed</span>
+            {% else %}
+                <span class="text-yellow-600 font-semibold">Pending</span>
+            {% endif %}
+        </li>
+    </ul>
+
+    <div class="mt-6 flex gap-4">
+        <a href="{% url 'tasks:task_list' %}" class="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition">← Back to Tasks</a>
+        {% if user.is_staff or user == task.assigned_to %}
+            <a href="{% url 'tasks:update_task' task.pk %}" class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition">Edit</a>
+            <a href="{% url 'tasks:delete_task' task.pk %}" class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition">Delete</a>
+        {% endif %}
+    </div>
+</div>
+{% endblock content %}
